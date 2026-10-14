@@ -1,0 +1,6 @@
+{
+  "name": "DocuSign Telegram",
+  "description": "Online document signing platform integrated with Telegram Mini App. Upload PDF, set signature placement, generate QR code, sign in Telegram, and download signed PDF.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

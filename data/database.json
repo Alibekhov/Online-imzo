@@ -1,0 +1,145 @@
+{
+  "users": [
+    {
+      "id": "usr_demo_sender_01",
+      "full_name": "Azizbek Rahimov",
+      "email": "sender@example.com",
+      "password_hash": "$2b$10$hGvqcffbzZP.hns4WPy.XOMHVCrtlnpOQolOKZ0ULTN2r1IXTGGXu",
+      "phone": "+998 90 123 45 67",
+      "created_at": "2026-10-05T13:46:45.133Z"
+    }
+  ],
+  "documents": [
+    {
+      "id": "doc_sample_01",
+      "owner_id": "usr_demo_sender_01",
+      "original_filename": "Xizmat_korsatish_shartnomasi.pdf",
+      "original_file_path": "/app/applet/uploads/documents/sample_shartnoma_01.pdf",
+      "page_count": 1,
+      "status": "PENDING_SIGNATURE",
+      "created_at": "2026-10-06T09:31:56.247Z",
+      "updated_at": "2026-10-14T09:46:43.488Z"
+    }
+  ],
+  "signing_requests": [
+    {
+      "id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "token": "c307ebea8b58ad85777bf3def41885dc",
+      "token_hash": "e2a4e0799498f9162fa119b76552f89460f6a82c13b6f8a308b6fc63a6bed2e7",
+      "recipient_name": "Mijoz (Telegram Foydalanuvchisi)",
+      "recipient_telegram_id": "@mijoz",
+      "status": "OPENED",
+      "expires_at": "2026-10-28T09:47:00.228Z",
+      "created_at": "2026-10-06T09:31:56.247Z"
+    }
+  ],
+  "signature_placements": [
+    {
+      "id": "plc_sample_01",
+      "signing_request_id": "req_sample_01",
+      "page_number": 1,
+      "x_pct": 54,
+      "y_pct": 65,
+      "width_pct": 35,
+      "height_pct": 12
+    }
+  ],
+  "signatures": [],
+  "audit_logs": [
+    {
+      "id": "log_01",
+      "document_id": "doc_sample_01",
+      "event_type": "DOCUMENT_UPLOADED",
+      "actor": "sender@example.com",
+      "metadata": {
+        "filename": "Xizmat_korsatish_shartnomasi.pdf"
+      },
+      "created_at": "2026-10-05T12:46:45.187Z"
+    },
+    {
+      "id": "log_02",
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "SIGNING_REQUEST_CREATED",
+      "actor": "sender@example.com",
+      "metadata": {
+        "recipient": "Jamshid Aliyev",
+        "telegram": "@jamshid_dev"
+      },
+      "created_at": "2026-10-05T12:48:25.187Z"
+    },
+    {
+      "id": "log_03",
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "QR_GENERATED",
+      "actor": "System",
+      "metadata": {
+        "tokenPrefix": "c307eb..."
+      },
+      "created_at": "2026-10-05T12:48:25.187Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "SIGNING_PAGE_OPENED",
+      "actor": "Jamshid Aliyev",
+      "metadata": {
+        "userAgent": "node"
+      },
+      "id": "log_7e4ad26af18b4367",
+      "created_at": "2026-10-05T13:46:54.080Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "SIGNATURE_CONFIRMED",
+      "actor": "Jamshid Aliyev",
+      "metadata": {
+        "telegram_id": "@jamshid_dev",
+        "ip": "127.0.0.1"
+      },
+      "id": "log_718fd64d2b8788f0",
+      "created_at": "2026-10-05T13:46:54.174Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "DOCUMENT_SIGNED",
+      "actor": "Jamshid Aliyev",
+      "metadata": {
+        "signed_at": "2026-10-05T13:46:54.172Z",
+        "placement": {
+          "page": 1,
+          "x": 54,
+          "y": 65
+        }
+      },
+      "id": "log_7d8c02a124ed148b",
+      "created_at": "2026-10-05T13:46:54.174Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "DOCUMENT_DOWNLOADED",
+      "actor": "Jamshid Aliyev",
+      "metadata": {
+        "via": "recipient_download_link"
+      },
+      "id": "log_6a3c2c63fafb4771",
+      "created_at": "2026-10-05T13:46:54.179Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "SIGNING_PAGE_OPENED",
+      "actor": "Mijoz (Telegram Foydalanuvchisi)",
+      "metadata": {
+        "userAgent": "curl/7.88.1"
+      },
+      "id": "log_f97dcc2d69f8ba5a",
+      "created_at": "2026-10-14T09:47:07.593Z"
+    }
+  ]
+}

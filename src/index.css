@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-caveat {
+    font-family: 'Caveat', cursive;
+  }
+  .font-dancing {
+    font-family: 'Dancing Script', cursive;
+  }
+  .font-sacramento {
+    font-family: 'Sacramento', cursive;
+  }
+  .font-great-vibes {
+    font-family: 'Great Vibes', cursive;
+  }
+  .font-reenie {
+    font-family: 'Reenie Beanie', cursive;
+  }
+  .font-marck {
+    font-family: 'Marck Script', cursive;
+  }
+}
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+  .page-break {
+    page-break-after: always;
+  }
+}
