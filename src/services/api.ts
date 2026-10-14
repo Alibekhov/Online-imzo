@@ -157,7 +157,10 @@ class ApiService {
     },
 
     getDownloadUrl: (token: string) => `${API_BASE}/signing/download/${token}`,
-    getPreviewPdfUrl: (token: string) => `${API_BASE}/signing/preview-pdf/${token}`
+    getPreviewPdfUrl: (token: string) => `${API_BASE}/signing/preview-pdf/${token}`,
+    getMyDocuments: () => {
+      return this.request<{ documents: any[] }>('/signing/my-documents');
+    }
   };
 
   // Telegram API

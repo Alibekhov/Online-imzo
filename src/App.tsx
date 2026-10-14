@@ -10,6 +10,7 @@ import { TelegramSigningScreen } from './components/signing/TelegramSigningScree
 import { AuditTrailModal } from './components/audit/AuditTrailModal';
 import { TelegramBotStatusModal } from './components/telegram/TelegramBotStatusModal';
 import { DocumentItem } from './types/client';
+import { TelegramMiniAppHome } from './components/telegram/TelegramMiniAppHome';
 import { FileText, QrCode, Smartphone, ShieldCheck, ArrowRight, Sparkles } from 'lucide-react';
 
 function AppContent() {
@@ -31,6 +32,20 @@ function AppContent() {
   // QR Modal data
   const [activeQrRequest, setActiveQrRequest] = useState<any>(null);
   const [activeQrData, setActiveQrData] = useState<any>(null);
+
+  // Detect if app is currently running inside Telegram WebApp or requested miniapp mode
+  const isInsideTelegram = Boolean(
+    (typeof window !== 'undefined') && (
+      (window as any).Telegram?.WebApp?.initData || 
+      window.location.hash.includes('tgWebAppData') ||
+      (window as any).TelegramWebviewProxy ||
+      window.location.search.includes('tgWebApp') ||
+      window.location.search.includes('mode=miniapp')
+    )
+  );
+
+  const [appMode, setAppMode] = useState<'desktop' | 'miniapp'>(isInsideTelegram ? 'miniapp' : 'desktop');
+  const tgUser = (typeof window !== 'undefined') ? (window as any).Telegram?.WebApp?.initDataUnsafe?.user : null;
 
   // Check URL path and Telegram WebApp start parameters on mount & popstate
   useEffect(() => {
@@ -100,7 +115,7 @@ function AppContent() {
     window.history.pushState({}, '', '/');
   };
 
-  // If user opens a direct signing link (/sign/:token), render the Telegram Signing Screen directly
+  // If user is on the signing view (/sign/:token or active signingToken), render 70% Signature Board with 3 buttons
   if (currentView === 'signing' && signingToken) {
     return (
       <TelegramSigningScreen
@@ -110,13 +125,16 @@ function AppContent() {
     );
   }
 
-  // Detect if app is currently running inside Telegram WebApp
-  const isInsideTelegram = Boolean(
-    (window as any).Telegram?.WebApp?.initData || 
-    window.location.hash.includes('tgWebAppData') ||
-    (window as any).TelegramWebviewProxy
-  );
-  const tgUser = (window as any).Telegram?.WebApp?.initDataUnsafe?.user;
+  // If app is opened inside Telegram or user switched to Mini App mode:
+  // Render Screen 1: Profile + QR Scan + Documents List!
+  if (appMode === 'miniapp') {
+    return (
+      <TelegramMiniAppHome
+        onOpenSigner={handleOpenSigner}
+        onOpenDesktopMode={() => setAppMode('desktop')}
+      />
+    );
+  }
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900 flex flex-col">
@@ -135,6 +153,7 @@ function AppContent() {
         onOpenBotStatus={() => setIsBotStatusOpen(true)}
         currentView={currentView}
         onNavigateHome={handleNavigateHome}
+        onSwitchToMiniApp={() => setAppMode('miniapp')}
       />
 
       {/* Main Content Area */}

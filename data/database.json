@@ -16,9 +16,20 @@
       "original_filename": "Xizmat_korsatish_shartnomasi.pdf",
       "original_file_path": "/app/applet/uploads/documents/sample_shartnoma_01.pdf",
       "page_count": 1,
-      "status": "PENDING_SIGNATURE",
+      "status": "SIGNED",
       "created_at": "2026-10-06T09:31:56.247Z",
-      "updated_at": "2026-10-14T09:46:43.488Z"
+      "updated_at": "2026-10-14T09:57:37.829Z",
+      "signed_file_path": "/app/applet/uploads/signed/signed_doc_sample_01_1791971857828.pdf"
+    },
+    {
+      "owner_id": "usr_demo_sender_01",
+      "original_filename": "Xizmat_korsatish_shartnomasi_namuna.pdf",
+      "original_file_path": "/app/applet/uploads/documents/namuna_shartnoma_1791971874363.pdf",
+      "page_count": 1,
+      "status": "PENDING_SIGNATURE",
+      "id": "doc_075fca24ed504f15",
+      "created_at": "2026-10-14T09:57:54.364Z",
+      "updated_at": "2026-10-14T09:57:54.364Z"
     }
   ],
   "signing_requests": [
@@ -29,9 +40,20 @@
       "token_hash": "e2a4e0799498f9162fa119b76552f89460f6a82c13b6f8a308b6fc63a6bed2e7",
       "recipient_name": "Mijoz (Telegram Foydalanuvchisi)",
       "recipient_telegram_id": "@mijoz",
-      "status": "OPENED",
-      "expires_at": "2026-10-28T09:47:00.228Z",
-      "created_at": "2026-10-06T09:31:56.247Z"
+      "status": "SIGNED",
+      "expires_at": "2026-10-28T09:47:48.629Z",
+      "created_at": "2026-10-06T09:31:56.247Z",
+      "signed_at": "2026-10-14T09:57:37.829Z"
+    },
+    {
+      "document_id": "doc_075fca24ed504f15",
+      "token": "156dba375a84e4a9494f810e06d36a90ce69d25c25ef2356",
+      "token_hash": "c96184d2a0f4d748882a147e63f81f0d58e98cbac4c9db55cf3f4619261b786d",
+      "recipient_name": "Mijoz (Telegram Foydalanuvchisi)",
+      "status": "PENDING_SIGNATURE",
+      "expires_at": "2026-10-28T10:04:46.102Z",
+      "id": "req_a9bf4b6cf7cf26d9",
+      "created_at": "2026-10-14T09:57:54.365Z"
     }
   ],
   "signature_placements": [
@@ -43,9 +65,27 @@
       "y_pct": 65,
       "width_pct": 35,
       "height_pct": 12
+    },
+    {
+      "signing_request_id": "req_a9bf4b6cf7cf26d9",
+      "page_number": 1,
+      "x_pct": 54,
+      "y_pct": 65,
+      "width_pct": 35,
+      "height_pct": 12,
+      "id": "plc_68260c0345673604"
     }
   ],
-  "signatures": [],
+  "signatures": [
+    {
+      "signing_request_id": "req_sample_01",
+      "signer_name": "Mijoz (Telegram Foydalanuvchisi)",
+      "signer_telegram_id": "@mijoz",
+      "signature_file_path": "/app/applet/uploads/signatures/sig_req_sample_01_1791971857578.png",
+      "id": "sig_045a5d0e99f02721",
+      "signed_at": "2026-10-14T09:57:37.830Z"
+    }
+  ],
   "audit_logs": [
     {
       "id": "log_01",
@@ -140,6 +180,56 @@
       },
       "id": "log_f97dcc2d69f8ba5a",
       "created_at": "2026-10-14T09:47:07.593Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "SIGNING_PAGE_OPENED",
+      "actor": "Mijoz (Telegram Foydalanuvchisi)",
+      "metadata": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 15; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/154.0.8037.101 Mobile Safari/537.36 Telegram-Android/12.10.6 (Xiaomi 25078RA3EA; Android 15; SDK 35; AVERAGE)"
+      },
+      "id": "log_d8f4f200325083f0",
+      "created_at": "2026-10-14T09:57:28.729Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "SIGNATURE_CONFIRMED",
+      "actor": "Mijoz (Telegram Foydalanuvchisi)",
+      "metadata": {
+        "telegram_id": "@mijoz",
+        "ip": "127.0.0.1"
+      },
+      "id": "log_a3b19f931c6f65d9",
+      "created_at": "2026-10-14T09:57:37.832Z"
+    },
+    {
+      "signing_request_id": "req_sample_01",
+      "document_id": "doc_sample_01",
+      "event_type": "DOCUMENT_SIGNED",
+      "actor": "Mijoz (Telegram Foydalanuvchisi)",
+      "metadata": {
+        "signed_at": "2026-10-14T09:57:37.829Z",
+        "placement": {
+          "page": 1,
+          "x": 54,
+          "y": 65
+        }
+      },
+      "id": "log_ae469053acf5e0f9",
+      "created_at": "2026-10-14T09:57:37.832Z"
+    },
+    {
+      "signing_request_id": "req_a9bf4b6cf7cf26d9",
+      "document_id": "doc_075fca24ed504f15",
+      "event_type": "SIGNING_PAGE_OPENED",
+      "actor": "Mijoz (Telegram Foydalanuvchisi)",
+      "metadata": {
+        "userAgent": "Mozilla/5.0 (Linux; Android 15; K) Telegram-Android/12.10.6 (Xiaomi 25078RA3EA; Android 15; SDK 35; AVERAGE)"
+      },
+      "id": "log_20cb3546ef1124d4",
+      "created_at": "2026-10-14T09:57:54.860Z"
     }
   ]
 }

@@ -209,6 +209,41 @@ router.get('/info/:token', async (req: Request, res: Response) => {
   }
 });
 
+// Public / Telegram Mini App: Get list of documents for signer (both signed and pending)
+router.get('/my-documents', (req: Request, res: Response) => {
+  try {
+    const allRequests = Database['data']?.signing_requests || [];
+    const allDocs = Database['data']?.documents || [];
+    const allSignatures = Database['data']?.signatures || [];
+
+    const documents = allRequests.map((r: any) => {
+      const doc = allDocs.find((d: any) => d.id === r.document_id);
+      const sig = allSignatures.find((s: any) => s.signing_request_id === r.id);
+      const owner = Database.findUserById(doc?.owner_id || '');
+
+      return {
+        id: r.id,
+        document_id: r.document_id,
+        title: doc?.original_filename || 'Xizmat_korsatish_shartnomasi.pdf',
+        token: r.token,
+        status: r.status,
+        recipient_name: r.recipient_name,
+        recipient_telegram_id: r.recipient_telegram_id,
+        sender_name: owner?.full_name || 'Azizbek Rahimov',
+        created_at: r.created_at,
+        signed_at: r.signed_at || sig?.signed_at,
+        download_url: `/api/signing/download-signed/${r.token}`,
+        preview_url: `/api/signing/preview-pdf/${r.token}`
+      };
+    });
+
+    return res.json({ documents });
+  } catch (err: any) {
+    console.error('Get my-documents error:', err);
+    return res.status(500).json({ error: 'Hujjatlar ro‘yxatini yuklashda xatolik yuz berdi.' });
+  }
+});
+
 // Public: Submit drawn signature from Telegram Mini App / Web Canvas
 router.post('/submit', async (req: Request, res: Response) => {
   try {

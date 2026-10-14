@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { FileText, LogOut, User as UserIcon, Send } from 'lucide-react';
+import { FileText, LogOut, User as UserIcon, Send, Smartphone } from 'lucide-react';
 
 interface NavbarProps {
   onOpenAuth: () => void;
@@ -9,6 +9,7 @@ interface NavbarProps {
   onOpenBotStatus: () => void;
   currentView: 'dashboard' | 'placement' | 'signing';
   onNavigateHome: () => void;
+  onSwitchToMiniApp?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -17,7 +18,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onOpenSample,
   onOpenBotStatus,
   currentView,
-  onNavigateHome
+  onNavigateHome,
+  onSwitchToMiniApp
 }) => {
   const { user, isAuthenticated, logout } = useAuth();
 
@@ -65,6 +67,17 @@ export const Navbar: React.FC<NavbarProps> = ({
 
         {/* Zone 3: Primary actions & User profile */}
         <div className="flex items-center gap-3">
+          {onSwitchToMiniApp && (
+            <button
+              onClick={onSwitchToMiniApp}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold transition-all shadow-xs"
+              title="Telegram Mini App ko‘rinishiga o‘tish"
+            >
+              <Smartphone className="w-3.5 h-3.5 text-blue-400" />
+              <span className="hidden sm:inline">Mini App ko‘rinishi</span>
+            </button>
+          )}
+
           {isAuthenticated && user ? (
             <div className="flex items-center gap-3">
               <button

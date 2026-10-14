@@ -12,7 +12,8 @@ import {
   Smartphone, 
   Eye, 
   PenTool, 
-  X
+  X,
+  ArrowLeft
 } from 'lucide-react';
 
 interface TelegramSigningScreenProps {
@@ -399,52 +400,59 @@ export const TelegramSigningScreen: React.FC<TelegramSigningScreenProps> = ({
         </div>
       )}
 
-      {/* Mini Header */}
-      <div className="h-11 bg-neutral-900 border-b border-neutral-800 px-4 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-2 truncate">
+      {/* Mini Header with Back Button */}
+      <div className="h-12 bg-neutral-900 border-b border-neutral-800 px-3 sm:px-4 flex items-center justify-between shrink-0">
+        <div className="flex items-center gap-2.5 truncate">
+          {onNavigateHome && (
+            <button
+              onClick={onNavigateHome}
+              className="p-1.5 -ml-1 text-neutral-400 hover:text-white rounded-lg hover:bg-neutral-800 transition-colors flex items-center gap-1 text-xs font-semibold"
+            >
+              <ArrowLeft className="w-4 h-4 text-neutral-300" />
+              <span className="hidden sm:inline">Ortga</span>
+            </button>
+          )}
           <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-          <span className="text-xs font-semibold text-neutral-200 truncate">
-            {data?.document.title}
-          </span>
-          <span className="text-[11px] text-neutral-500 hidden sm:inline">
-            · {data?.document.sender_name} tomonidan
-          </span>
+          <div className="truncate">
+            <p className="text-xs font-bold text-neutral-100 truncate">
+              {data?.document.title}
+            </p>
+            <p className="text-[10px] text-neutral-400 truncate">
+              {data?.request.recipient_name}
+            </p>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowDocPreview(true)}
-            className="px-2.5 py-1 text-[11px] font-medium text-neutral-300 hover:text-white bg-neutral-800 hover:bg-neutral-700 rounded-md border border-neutral-700 flex items-center gap-1 transition-colors"
-          >
-            <Eye className="w-3 h-3 text-blue-400" />
-            <span>Hujjatni ko‘rish</span>
-          </button>
+        <div className="flex items-center gap-2 shrink-0">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-blue-950 text-blue-300 border border-blue-800/60">
+            {hasDrawn ? '✓ Imzo chizildi' : 'Doska bo‘sh'}
+          </span>
         </div>
       </div>
 
-      {/* Main Split Layout: ~70% Signature Canvas + ~30% Control Panel */}
-      <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
+      {/* Main Container: 70% Signature Board + 30% 3 Action Buttons */}
+      <div className="flex-1 flex flex-col justify-between overflow-hidden p-2 sm:p-4 gap-2.5">
         
-        {/* ~70% Screen: Large Signature Canvas Area */}
-        <div className="flex-1 md:w-[72%] relative bg-neutral-900 flex flex-col p-2 sm:p-4">
+        {/* 70% Screen: White Signature Canvas Board */}
+        <div className="h-[68vh] sm:h-[70vh] flex flex-col relative bg-neutral-900 rounded-2xl border-2 border-neutral-800 p-2 sm:p-3 overflow-hidden shadow-2xl">
           
           <div className="flex items-center justify-between px-2 pb-1.5 text-xs text-neutral-400">
-            <div className="flex items-center gap-1.5 font-medium text-neutral-300">
+            <div className="flex items-center gap-1.5 font-semibold text-neutral-200">
               <PenTool className="w-3.5 h-3.5 text-blue-400" />
-              <span>Imzo qo‘ying (barmog‘ingiz yoki stilus bilan chizing)</span>
+              <span>Qo‘l qo‘yish uchun doska (70%)</span>
             </div>
-            <span className="text-[11px] text-neutral-500 font-mono">
-              {hasDrawn ? '✓ Imzo chizildi' : 'Chizilmagan'}
+            <span className="text-[11px] text-neutral-400">
+              Barmog‘ingiz bilan chizing
             </span>
           </div>
 
-          {/* White Drawing Canvas Container */}
-          <div className="flex-1 relative bg-white rounded-xl shadow-inner border-2 border-neutral-700 overflow-hidden touch-none flex items-center justify-center">
+          {/* White Drawing Canvas Board */}
+          <div className="flex-1 relative bg-white rounded-xl shadow-inner border border-neutral-300 overflow-hidden touch-none flex items-center justify-center">
             
-            {/* Guide line inside canvas */}
-            <div className="absolute inset-x-8 bottom-12 border-b border-dashed border-neutral-300 pointer-events-none flex justify-between text-[10px] text-neutral-400 select-none pb-1">
+            {/* Guide line and watermark inside canvas */}
+            <div className="absolute inset-x-8 bottom-10 border-b-2 border-dashed border-neutral-300 pointer-events-none flex justify-between text-[11px] text-neutral-400 select-none pb-1 font-mono">
               <span>✍️ Imzo chizig‘i</span>
-              <span>DocuSign TG Security</span>
+              <span>Online Imzo Bot</span>
             </div>
 
             <canvas
@@ -459,85 +467,63 @@ export const TelegramSigningScreen: React.FC<TelegramSigningScreenProps> = ({
               className="absolute inset-0 w-full h-full cursor-crosshair touch-none"
             />
           </div>
-
-          <p className="text-[10px] text-neutral-500 mt-1 px-2 text-center md:text-left">
-            Imzo shaffof fonda saqlanib, hujjatning sahifasidagi belgilangan koordinatalariga joylashtiriladi.
-          </p>
         </div>
 
-        {/* ~30% Screen: Control Panel */}
-        <div className="md:w-[28%] bg-neutral-950 border-t md:border-t-0 md:border-l border-neutral-800 p-3 sm:p-5 flex flex-col justify-between shrink-0">
-          
-          <div className="space-y-3">
-            <div>
-              <p className="text-[11px] font-semibold text-neutral-400 uppercase tracking-wider">
-                Imzolovchi
-              </p>
-              <p className="text-sm font-bold text-white mt-0.5 truncate">
-                {data?.request.recipient_name}
-              </p>
-              {data?.request.recipient_telegram_id && (
-                <p className="text-xs text-blue-400 font-mono">
-                  {data?.request.recipient_telegram_id}
-                </p>
-              )}
-            </div>
-
-            <div className="p-3 rounded-lg bg-neutral-900 border border-neutral-800 text-xs space-y-1 font-mono">
-              <div className="flex justify-between text-neutral-400">
-                <span>Sahifa:</span>
-                <span className="text-neutral-200">{data?.placement?.page_number || 1}</span>
-              </div>
-              <div className="flex justify-between text-neutral-400">
-                <span>Joylashuv:</span>
-                <span className="text-neutral-200">{data?.placement?.x_pct}% / {data?.placement?.y_pct}%</span>
-              </div>
-            </div>
-
-            {error && (
-              <div className="p-2.5 rounded-lg bg-red-950/80 border border-red-800 text-xs text-red-300">
-                {error}
-              </div>
-            )}
+        {error && (
+          <div className="p-2.5 bg-red-950/90 border border-red-800 rounded-xl text-xs text-red-300 flex items-center justify-between">
+            <span>{error}</span>
+            <button onClick={() => setError(null)} className="text-red-400 hover:text-white">
+              <X className="w-4 h-4" />
+            </button>
           </div>
+        )}
 
-          {/* Action Buttons: Button 1 & Button 2 per specification */}
-          <div className="space-y-2.5 pt-3">
+        {/* 30% Area: EXACTLY 3 BUTTONS PER USER SPECIFICATION */}
+        <div className="shrink-0 bg-neutral-900/90 border border-neutral-800 rounded-2xl p-2.5 sm:p-3 shadow-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             
-            {/* Button 1: "Imzoni tasdiqlash" */}
+            {/* 1-button: "Hujjatni ko'rish" */}
+            <button
+              onClick={() => setShowDocPreview(true)}
+              type="button"
+              className="py-3 px-3 bg-neutral-800 hover:bg-neutral-700 active:scale-98 text-neutral-200 hover:text-white text-xs font-bold rounded-xl border border-neutral-700/80 transition-all flex items-center justify-center gap-2 shadow-sm order-2 sm:order-1"
+            >
+              <Eye className="w-4 h-4 text-blue-400" />
+              <span>1. Hujjatni ko‘rish</span>
+            </button>
+
+            {/* 2-button: "Imzoni tasdiqlash" (Primary Main Action) */}
             <button
               onClick={handleConfirmSignature}
               disabled={isSubmitting}
-              className="w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-500 text-white text-sm font-bold rounded-xl shadow-lg transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              type="button"
+              className="py-3 px-4 bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-500 hover:to-indigo-500 active:scale-98 text-white text-sm font-extrabold rounded-xl shadow-lg transition-all disabled:opacity-50 flex items-center justify-center gap-2 order-1 sm:order-2"
             >
               {isSubmitting ? (
-                <span>Hujjat tasdiqlanmoqda...</span>
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  <span>Tasdiqlanmoqda...</span>
+                </div>
               ) : (
                 <>
-                  <CheckCircle2 className="w-5 h-5 text-white" />
-                  <span>Imzoni tasdiqlash</span>
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                  <span>2. Imzoni tasdiqlash</span>
                 </>
               )}
             </button>
 
-            {/* Button 2: "Imzoni yangilash" */}
+            {/* 3-button: "Qayta imzo qo'yish" */}
             <button
               onClick={handleResetSignature}
               disabled={isSubmitting}
               type="button"
-              className="w-full py-2.5 px-3 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white text-xs font-semibold rounded-xl border border-neutral-700 transition-colors flex items-center justify-center gap-2"
+              className="py-3 px-3 bg-neutral-800 hover:bg-neutral-700 active:scale-98 text-neutral-300 hover:text-white text-xs font-bold rounded-xl border border-neutral-700/80 transition-all flex items-center justify-center gap-2 shadow-sm order-3"
             >
-              <RotateCcw className="w-4 h-4 text-neutral-400" />
-              <span>Imzoni yangilash</span>
+              <RotateCcw className="w-4 h-4 text-amber-400" />
+              <span>3. Qayta imzo qo‘yish</span>
             </button>
 
-            <div className="flex items-center justify-center gap-1.5 text-[10px] text-neutral-500 pt-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-              <span>Xavfsiz elektron tasdiqlash</span>
-            </div>
-
           </div>
-
         </div>
 
       </div>
